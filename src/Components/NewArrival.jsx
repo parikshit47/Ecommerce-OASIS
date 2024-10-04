@@ -19,7 +19,7 @@ const NewArrivals = () => {
   
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/getProducts');
+        const response = await axios.get('http://localhost:5000/getProducts');
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);

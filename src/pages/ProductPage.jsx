@@ -20,13 +20,15 @@ const ProductPage = () => {
     const fetchProduct = async () => {
       setLoading(true); // Set loading to true when fetching starts
       try {
-        const response = await axios.get('http://localhost:3000/getProducts'); // Fetch products
+        const response = await axios.get('http://localhost:5000/getProducts'); // Fetch products
         const products = response.data;
-
+    
+        console.log("Fetched Products:", products); // Log fetched products
+    
         const foundProduct = products.find(
           (p) => p.name.toLowerCase() === name.replace(/-/g, ' ').toLowerCase()
         );
-
+    
         if (foundProduct) {
           setProduct(foundProduct);
           setLoading(false); // Set loading to false when the product is found
@@ -35,11 +37,12 @@ const ProductPage = () => {
           setLoading(false); // Set loading to false if there's an error
         }
       } catch (err) {
+        console.error("Error fetching product:", err); // Log the error
         setError("Failed to fetch product");
         setLoading(false); // Set loading to false in case of error
       }
     };
-
+    
     fetchProduct();
   }, [name]);
 

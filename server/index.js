@@ -1,42 +1,38 @@
-import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv'; 
+import { connectDB } from './lib/mongoose.js';
 import Product from './models/Product.js';
-import process from 'process'; 
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
+
 app.use(cors({
-    origin: 'http://localhost:5173' 
+    origin: 'http://localhost:5173' // Frontend port
 }));
 app.use(express.json());
-const mongoURL = process.env.MONGO_URL; 
 
-if (!mongoURL) {
-    console.error('MONGO_URL is not defined in the environment variables');
-    throw new Error('MONGO_URL is not defined');
-}
-
-mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
+// Connect to MongoDB
+connectDB()
     .then(() => console.log("MongoDB connected successfully"))
     .catch(err => console.error("MongoDB connection error:", err));
 
 app.get('/getProducts', async (req, res) => {
     try {
         const products = await Product.find();
-        console.log("Products fetched:", products); // Log the products fetched from the database
+        console.log("Products fetched:", products);
         if (products.length === 0) {
-            console.log("No products found in the database."); // Log if no products were found
+            console.log("No products found in the database.");
         }
         res.json(products);
     } catch (err) {
-        console.error("Error fetching products:", err); // Log the error if it occurs
-        res.status(500).json({ error: err.message });
+        console.error("Error fetching products:", err);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
-app.listen(3000, () => {
-    console.log("Server is running on port 3000");
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });

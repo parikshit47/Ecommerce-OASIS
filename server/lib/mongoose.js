@@ -1,11 +1,14 @@
-/* eslint-disable no-undef */
+import dotenv from 'dotenv';
+dotenv.config();
 // lib/mongoose.js
 
 import mongoose from 'mongoose';
+const mongoURL = "mongodb+srv://parikshit:gKLHDWeedDAiObXz@ecommerce.6fp9w.mongodb.net/Ecommerce?retryWrites=true&w=majority&appName=Ecommerce";
 
 export const connectDB = async () => {
+  
   try {
-    await mongoose.connect(process.env.MONGODB_URI, { 
+    await mongoose.connect(mongoURL, { 
       useNewUrlParser: true, 
       useUnifiedTopology: true 
     });
