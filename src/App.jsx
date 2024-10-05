@@ -32,7 +32,8 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   return (
-    <Router>
+    <Router basename="/">
+
       {/* Use the new ConditionalShopHeader component */}
       <ConditionalShopHeader selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
       
