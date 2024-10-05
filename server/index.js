@@ -12,19 +12,27 @@ const PORT = process.env.PORT || 5000;
 // CORS configuration
 const allowedOrigins = [
     'http://localhost:5173', 
+    'http://localhost:3000',
     'http://localhost:3001', 
-    'https://plants-oasis.vercel.app/' 
+    'https://plants-oasis.vercel.app',
+    'https://ecommerce-oasis-sud5.onrender.com'
 ];
 
 app.use(cors({
-    origin: (origin, callback) => {
-        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-            callback(null, origin);
-        } else {
-            callback(new Error('Not allowed by CORS'));
+    origin: function(origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1){
+            var msg = 'The CORS policy for this site does not ' +
+                      'allow access from the specified Origin.';
+            return callback(new Error(msg), false);
         }
+        return callback(null, true);
     },
+    credentials: true
 }));
+
+// ... existing code ...
 
 app.use(express.json());
 
