@@ -17,47 +17,37 @@ const ProductPage = () => {
 
   // Fetch the product data by name
   useEffect(() => {
-    const fetchProduct = async () => {
-      setLoading(true); // Set loading to true when fetching starts
-      try {
-        const url = import.meta.env.VITE_REACT_APP_BACKEND_URL; // Ensure this is correct
-        console.log("Fetching from URL:", url);
-        
-        if (!url) {
-          throw new Error("Backend URL is undefined");
-        }
+  const fetchProduct = async () => {
+    setLoading(true); // Set loading to true when fetching starts
+    try {
+      // Use environment variable for the backend URL
+      const response = await axios.get('https://ecommerce-oasis-sud5.onrender.com/getProducts');
+      const products = response.data;
 
-        // Check if the URL is properly formatted
-        try {
-          new URL(url);
-        } catch (urlError) {
-          throw new Error(`Invalid URL: ${url}`);
-        }
+      console.log("Fetched Products:", products); // Log fetched products
 
-        const response = await axios.get(url);
-        console.log("Response Data:", response.data);
-        const products = response.data;
-  
-        const foundProduct = products.find(
-          (p) => p.name.toLowerCase() === name.replace(/-/g, ' ').toLowerCase()
-        );
-  
-        if (foundProduct) {
-          setProduct(foundProduct);
-        } else {
-          setError("Product not found");
-        }
-      } catch (err) {
-        console.error("Error fetching product:", err); // Log the error
-        setError(err.message || "Failed to fetch product");
-      } finally {
-        setLoading(false); // Set loading to false when fetching is done
+      const foundProduct = products.find(
+        (p) => p.name.toLowerCase() === name.replace(/-/g, ' ').toLowerCase()
+      );
+
+      if (foundProduct) {
+        setProduct(foundProduct);
+        setLoading(false); // Set loading to false when the product is found
+      } else {
+        setError("Product not found");
+        setLoading(false); // Set loading to false if there's an error
       }
-    };
-  
-    fetchProduct();
-  }, [name]);
-  
+    } catch (err) {
+      console.error("Error fetching product:", err); // Log the error
+      setError("Failed to fetch product");
+      setLoading(false); // Set loading to false in case of error
+    }
+  };
+
+  fetchProduct();
+}, [name]);
+
+
   // Handle adding the product to cart
   const handleAddToCart = () => {
     console.log("Adding to cart:", {
@@ -65,7 +55,7 @@ const ProductPage = () => {
       name: product.name,
       image: product.image,
       price: product.price,
-      quantity: localQuantity,
+      quantity: localQuantity, // This will now be correctly reflected in the cart
     });
 
     dispatch(addItem({
@@ -79,21 +69,25 @@ const ProductPage = () => {
 
   // Handle increasing and decreasing local quantity
   const increaseQuantity = () => {
-    setLocalQuantity(prev => prev + 1);
+    setLocalQuantity(prev => {
+      console.log("Increasing quantity:", prev + 1);
+      return prev + 1;
+    });
   };
 
   const decreaseQuantity = () => {
     if (localQuantity > 1) {
-      setLocalQuantity(prev => prev - 1);
+      setLocalQuantity(prev => {
+        console.log("Decreasing quantity:", prev - 1);
+        return prev - 1;
+      });
     }
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="loader"></div> 
-      </div> // Display a loader while product is being fetched
-    );
+    return <div className="flex justify-center items-center h-screen">
+      <div className="loader"></div> 
+    </div>; // Display a loader while product is being fetched
   }
 
   if (error) {
@@ -141,10 +135,7 @@ const ProductPage = () => {
             </div>
           </div>
 
-          <button 
-            onClick={handleAddToCart} 
-            className="bg-[#1E1E1E] text-white px-20 py-2 hover:bg-green-600 transition duration-300 uppercase rounded-lg mt-4"
-          >
+          <button onClick={handleAddToCart} className="bg-[#1E1E1E] text-white px-20 py-2 hover:bg-green-600 transition duration-300 uppercase rounded-lg mt-4">
             Add to Cart • ${product.price}
           </button>
         </motion.div>

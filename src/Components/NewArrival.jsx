@@ -19,7 +19,7 @@ const NewArrivals = () => {
   
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(import.meta.env.VITE_REACT_APP_BACKEND_URL);
+        const response = await axios.get('https://ecommerce-oasis-sud5.onrender.com/getProducts');
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
