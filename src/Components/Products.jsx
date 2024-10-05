@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Products = ({ products, selectedCategory }) => {
     const formatCategoryName = (category) => {
@@ -17,31 +18,50 @@ const Products = ({ products, selectedCategory }) => {
 
     return (
         <>
-            <div className="text-center pb-6">
-                <h1 className="text-4xl font-reck uppercase">
-                    {selectedCategory ? formatCategoryName(selectedCategory) : "All"}
+            <motion.div 
+                className="text-center pb-10"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <h1 className="text-5xl font-reck uppercase tracking-wider">
+                    {selectedCategory ? formatCategoryName(selectedCategory) : "All Products"}
                 </h1>
-            </div>
-            <div className="max-w-6xl p-5 mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
+            </motion.div>
+            <div className="max-w-7xl p-5 mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 {products.map(product => (
-                    <Link 
-                        to={{
-                          pathname: `/products/${formatProductNameForURL(product.name)}`,
-                          state: { product } // Pass the product data here
-                        }}
-                        key={product._id} 
-                        className="bg-transparent flex
-                         flex-col items-center cursor-pointer item"
+                    <motion.div
+                        key={product._id} // Use product._id as the key
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3 }}
                     >
-                        <img 
-                            src={`/images/${product.image}`} 
-                            alt={product.name} 
-                            className="w-full md:h-full
-                             object-cover mb-4 hover:shadow-md hover:scale-105 transition ease-in-out duration-700"
-                        />
-                        <p className="text-sm uppercase p-1 px-3 text-center">{product.name}</p>
-                        <p className="text-sm p-1">${product.price}</p>
-                    </Link>
+                        <Link 
+                            to={{
+                              pathname: `/products/${formatProductNameForURL(product.name)}`,
+                              state: { product }
+                            }}
+                            className="group bg-transparent  overflow-hidden 
+                            flex flex-col h-full transition-all duration-300 rounded-md"
+                        >
+                            <div className="relative">
+                                <img 
+                                    src={`/images/${product.image}`} 
+                                    alt={product.name} 
+                                    className="w-full h-96 object-cover object-center 
+                                    transition-transform duration-300 hover:scale-105"
+                                />
+                                <div className=" 
+                                group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                            <div className="p-4 flex-grow flex flex-col
+                            justify-between">
+                                <h2 className="text-md
+                                uppercase  text-gray-800">{product.name}</h2>
+                                <p className="text-md  text-gray-900">${product.price}</p>
+                            </div>
+                        </Link>
+                    </motion.div>
                 ))}
             </div>
         </>

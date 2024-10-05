@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem, clearCart } from '../redux/cartSlice';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart);
@@ -29,80 +30,93 @@ const Cart = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-2 sm:p-5">
-      <h2 className="text-2xl sm:text-4xl tracking-wider border-b p-3 sm:p-6 text-center uppercase">Cart</h2>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-6xl mx-auto p-4 sm:p-8"
+    >
+      <h2 className="text-2xl sm:text-4xl tracking-wider border-b p-3 sm:p-6 text-center uppercase mb-8">Cart</h2>
       
       {cartItems.length === 0 ? (
-        <p className="text-lg sm:text-xl p-4">Your cart is empty.</p>
+        <motion.p 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-lg sm:text-xl p-4 text-center"
+        >
+          Your cart is empty.
+        </motion.p>
       ) : (
         <>
-          <ul className="space-y-2 sm:space-y-0 max-w-full border-t p-2 sm:p-5">
-            {cartItems.map((item) => (
-              <li key={item.id} className="flex flex-col sm:flex-row items-center justify-between p-2 sm:p-4 mb-2 sm:mb-4 border-b">
-                <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-5 w-full">
+          <ul className="space-y-4 sm:space-y-6 max-w-full">
+            {cartItems.map((item, index) => (
+              <motion.li 
+                key={item.id} 
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+                className="flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6 bg-white shadow-md rounded-lg"
+              >
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 w-full">
                   <img
                     src={`/images/${item.image}`}
                     alt={item.name}
-                    className="w-32 h-32 sm:w-44 sm:h-44 object-contain"
+                    className="w-32 h-32 sm:w-44 sm:h-44 object-contain rounded-md"
                   />
-                  <span className="text-sm w-full text-center sm:text-left uppercase">{item.name}</span>
-                  <span className="text-sm mt-2 sm:mt-0 
-                  sm:ml-4">${item.price}</span>
+                  <div className="flex flex-col items-center sm:items-start">
+                    <span className="text-sm sm:text-base uppercase font-semibold mb-2">{item.name}</span>
+                    <span className="text-sm sm:text-base text-gray-600">${item.price}</span>
+                  </div>
                   
-                  <div className="flex items-center border
-                   border-gray-300 mt-2 sm:mt-0">
+                  <div className="flex items-center border border-gray-300 rounded-md overflow-hidden mt-4 sm:mt-0 ml-auto">
                     <button 
                       onClick={() => handleRemoveItem(item)} 
-                      className="px-3 py-2 text-xl font-semibold 
-                      border-r border-gray-300 hover:bg-gray-200 transition duration-200"
+                      className="px-3 py-2 text-xl font-semibold hover:bg-gray-100 transition duration-200"
                     >
                       -
                     </button>
-                    <span className="px-3 py-2 text-sm w-10 
-                    text-center">{item.quantity}</span>
+                    <span className="px-3 py-2 text-sm w-10 text-center bg-gray-50">{item.quantity}</span>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleAddItem(item);
                       }}
-                      className="px-3 py-2 text-xl font-semibold 
-                      border-l border-gray-300 hover:bg-gray-200 transition duration-200"
+                      className="px-3 py-2 text-xl font-semibold hover:bg-gray-100 transition duration-200"
                     >
                       +
                     </button>
                   </div>
                 </div>
-              </li>
+              </motion.li>
             ))}
           </ul>
 
-          <div className="flex flex-col sm:flex-row 
-          justify-between items-center py-3 sm:py-5">
-            <h3 className="text-xl sm:text-2xl uppercase
-             mb-3 sm:mb-0">Total: ${totalPrice.toFixed(2)}</h3>
-            <div className="flex flex-col sm:flex-row gap-2 
-            sm:gap-4 w-10/12 sm:w-auto">
+          <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="flex flex-col sm:flex-row justify-between items-center py-6 sm:py-8 mt-8 border-t"
+          >
+            <h3 className="text-xl sm:text-2xl uppercase mb-4 sm:mb-0">Total: ${totalPrice.toFixed(2)}</h3>
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <button 
                 onClick={handleClearCart} 
-                className="bg-[#1E1E1E] text-white px-10 
-                sm:px-20 py-2 hover:bg-red-600 transition 
-                duration-300 uppercase rounded-lg w-full sm:w-auto"
+                className="bg-[#1E1E1E] text-white px-8 sm:px-12 py-3 hover:bg-red-600 transition duration-300 uppercase rounded-lg w-full sm:w-auto"
               >
                 Clear Cart
               </button>
               <button 
                 onClick={handleCheckout} 
-                className="bg-blue-600 text-white px-10 
-                sm:px-20 py-2 hover:bg-blue-700 transition 
-                duration-300 uppercase rounded-lg w-full sm:w-auto"
+                className="bg-blue-600 text-white px-8 sm:px-12 py-3 hover:bg-blue-700 transition duration-300 uppercase rounded-lg w-full sm:w-auto"
               >
                 Checkout
               </button>
             </div>
-          </div>
+          </motion.div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 };
 

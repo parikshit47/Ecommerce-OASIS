@@ -10,10 +10,10 @@ const cartSlice = createSlice({
     addItem: (state, action) => {
       const existingItem = state.find((item) => item.id === action.payload.id);
       const quantityToAdd = Math.max(action.payload.quantity || 1, 1); // Ensure quantity is at least 1
-    
+      
       if (existingItem) {
-        // If item exists, increase the quantity by the specified amount
-        existingItem.quantity += 1;
+        // Add only the new quantity specified by the user
+        existingItem.quantity += action.payload.quantity;
       } else {
         // Add new item with the specified quantity
         state.push({ ...action.payload, quantity: quantityToAdd });
@@ -22,6 +22,7 @@ const cartSlice = createSlice({
       // Save updated cart to localStorage
       localStorage.setItem('cart', JSON.stringify(state));
     },
+    
     
     removeItem: (state, action) => {
       const itemIndex = state.findIndex((item) => item.id === action.payload.id);

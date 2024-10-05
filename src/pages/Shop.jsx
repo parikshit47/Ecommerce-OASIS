@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Products from "../Components/Products";
-import axios from "axios";
 
 const Shop = () => {
   const { category } = useParams();
@@ -20,9 +19,10 @@ const Shop = () => {
   const fetchProducts = async () => {
     try {
       console.log('Fetching products...');
-      const response = await axios.get('https://ecommerce-oasis-sud5.onrender.com/getProducts');
-      console.log('Products fetched:', response.data);
-      setProducts(response.data);
+      const response = await fetch('/products.json');
+      const data = await response.json();
+      console.log('Products fetched:', data);
+      setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -39,12 +39,11 @@ const Shop = () => {
   }, [category]);
 
   const filteredProducts = products.filter(product => 
-    selectedCategory === "all" || product.category.toLowerCase() === selectedCategory.toLowerCase()
+    selectedCategory === "all" || product.categories.map(cat => cat.toLowerCase()).includes(selectedCategory.toLowerCase())
   );
 
   return (
-    <div>
-    
+    <div className="pt-10">
       <Products 
         products={filteredProducts} 
         selectedCategory={formatCategoryName(selectedCategory)} 
