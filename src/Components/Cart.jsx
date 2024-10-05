@@ -34,7 +34,7 @@ const Cart = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="max-w-6xl mx-auto p-4 sm:p-8"
+      className="max-w-6xl mx-auto p-4 sm:p-8 mt-24"
     >
       <h2 className="text-2xl sm:text-4xl tracking-wider border-b p-3 sm:p-6 text-center uppercase mb-8">Cart</h2>
       

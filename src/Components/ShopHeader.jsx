@@ -106,7 +106,7 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
   return (
     <header className="w-full z-50 top-0 fixed bg-[#F9F9F3] shadow-md ">
       <div className="container mx-auto px-6">
-        <nav className="flex items-center justify-between py-4">
+        <nav className="flex items-center justify-between lg:justify-evenly py-4">
           <Link to="/home" className="text-2xl font-reck text-zinc-900 hover:text-green-700 transition-colors duration-300">
             OASIS
           </Link>
@@ -171,7 +171,9 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
           >
             <button
               onClick={() => handleCategoryChange(category)}
-              className={`block w-full text-left px-4 py-2 uppercase hover:bg-green-100 transition-colors duration-300 rounded-md ${selectedCategory === category ? "bg-green-100 text-green-700" : ""}`}
+              className={`block w-full text-left text-2xl px-4
+                py-2 uppercase hover:bg-green-100 transition-colors 
+                duration-300 rounded-md ${selectedCategory === category ? "bg-green-100 text-green-700" : ""}`}
             >
               {formatCategoryName(category)}
             </button>
