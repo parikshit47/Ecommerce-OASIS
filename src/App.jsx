@@ -32,7 +32,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   return (
-    <Router basename="/Ecommerce-OASIS">
+    <Router>
       {/* Use the new ConditionalShopHeader component */}
       <ConditionalShopHeader selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
       
