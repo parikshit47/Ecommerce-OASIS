@@ -11,7 +11,8 @@ const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
     'http://localhost:5173', // Add your frontend URL(s) here
-    'http://localhost:3001',  // If your frontend runs here
+    'http://localhost:3001', 
+    'https://plants-oasis.vercel.app/' // If your frontend runs here
 ];
 
 app.use(cors({
