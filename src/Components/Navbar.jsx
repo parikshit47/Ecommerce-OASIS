@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BsArrowRight } from "react-icons/bs";
+import { HiArrowSmallRight } from "react-icons/hi2";
 import { HiMenuAlt3 } from "react-icons/hi"; // Hamburger icon for mobile
 import { AiOutlineClose } from "react-icons/ai"; // Close icon for mobile
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
@@ -35,8 +35,8 @@ const Navbar = () => {
             <li key={name} className="nav__item">
               <Link to={`/shop/${path}`} className="flex items-center group">
                 <span className="opacity-0 group-hover:opacity-100 
-                transition-opacity duration-300 ease-in-out mr-2">
-                  <BsArrowRight />
+                 ease-in-out mr-2">
+                  <HiArrowSmallRight />
                 </span>
                 {name}
               </Link>

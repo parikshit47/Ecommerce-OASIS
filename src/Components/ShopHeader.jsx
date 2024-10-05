@@ -149,38 +149,39 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
 
         {/* Mobile Menu */}
         <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              className="md:hidden fixed top-0 right-0 w-64 h-full bg-white z-40 shadow-lg overflow-y-auto"
-              ref={dropdownRef}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              variants={menuVariants}
+  {isMobileMenuOpen && (
+    <motion.div
+      className="md:hidden fixed top-0 right-0 w-full h-full bg-white z-40 shadow-lg overflow-hidden" // Adjusted styles here
+      ref={dropdownRef}
+      initial="closed"
+      animate="open"
+      exit="closed"
+      variants={menuVariants}
+    >
+      <ul className="p-4 mt-16 h-full">
+        {["all", "floral", "cactus", "petFriendly", "planters", "misc"].map((category, index) => (
+          <motion.li
+            key={category}
+            className="py-2"
+            variants={menuItemVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            transition={{ delay: 0.1 * index }}
+          >
+            <button
+              onClick={() => handleCategoryChange(category)}
+              className={`block w-full text-left px-4 py-2 uppercase hover:bg-green-100 transition-colors duration-300 rounded-md ${selectedCategory === category ? "bg-green-100 text-green-700" : ""}`}
             >
-              <ul className="p-4 mt-16">
-                {["all", "floral", "cactus", "petFriendly", "planters", "misc"].map((category, index) => (
-                  <motion.li
-                    key={category}
-                    className="py-2"
-                    variants={menuItemVariants}
-                    initial="closed"
-                    animate="open"
-                    exit="closed"
-                    transition={{ delay: 0.1 * index }}
-                  >
-                    <button
-                      onClick={() => handleCategoryChange(category)}
-                      className={`block w-full text-left px-4 py-2 uppercase hover:bg-green-100 transition-colors duration-300 rounded-md ${selectedCategory === category ? "bg-green-100 text-green-700" : ""}`}
-                    >
-                      {formatCategoryName(category)}
-                    </button>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              {formatCategoryName(category)}
+            </button>
+          </motion.li>
+        ))}
+      </ul>
+    </motion.div>
+  )}
+</AnimatePresence>
+
       </div>
     </header>
   );
