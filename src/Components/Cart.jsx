@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem, clearCart } from '../redux/cartSlice';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const handleAddItem = (item) => {
     console.log('Adding item:', item);
@@ -25,8 +25,8 @@ const Cart = () => {
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-  const handleCheckout = async () => {
-    navigate('/checkout');
+  const handleCheckout = () => {
+    setIsPopupVisible(true);
   };
 
   return (
@@ -116,6 +116,35 @@ const Cart = () => {
           </motion.div>
         </>
       )}
+
+      <AnimatePresence>
+        {isPopupVisible && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 rounded-lg"
+            onClick={() => setIsPopupVisible(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full m-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3 className="text-2xl font-semibold mb-4">Checkout Disabled</h3>
+              <p className="text-gray-600 mb-6">CHECKOUT IS DISABLED ON THIS SITE.</p>
+              <button
+                onClick={() => setIsPopupVisible(false)}
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+              >
+                Close
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
