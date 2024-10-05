@@ -31,6 +31,11 @@ connectDB()
     .then(() => console.log("MongoDB connected successfully"))
     .catch(err => console.error("MongoDB connection error:", err));
 
+// Default route
+app.get('/', (req, res) => {
+    res.send('Backend server is running');
+});
+
 app.get('/getProducts', async (req, res) => {
     try {
         const products = await Product.find();
