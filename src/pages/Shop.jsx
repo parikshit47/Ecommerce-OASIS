@@ -19,7 +19,9 @@ const Shop = () => {
 
   const fetchProducts = async () => {
     try {
+      console.log('Fetching products...');
       const response = await axios.get('https://ecommerce-oasis-sud5.onrender.com/getProducts');
+      console.log('Products fetched:', response.data);
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);

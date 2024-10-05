@@ -22,6 +22,18 @@ const ProductPage = () => {
       try {
         const url = import.meta.env.VITE_REACT_APP_BACKEND_URL; // Ensure this is correct
         console.log("Fetching from URL:", url);
+        
+        if (!url) {
+          throw new Error("Backend URL is undefined");
+        }
+
+        // Check if the URL is properly formatted
+        try {
+          new URL(url);
+        } catch (urlError) {
+          throw new Error(`Invalid URL: ${url}`);
+        }
+
         const response = await axios.get(url);
         console.log("Response Data:", response.data);
         const products = response.data;
@@ -37,7 +49,7 @@ const ProductPage = () => {
         }
       } catch (err) {
         console.error("Error fetching product:", err); // Log the error
-        setError("Failed to fetch product");
+        setError(err.message || "Failed to fetch product");
       } finally {
         setLoading(false); // Set loading to false when fetching is done
       }
