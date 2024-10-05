@@ -24,12 +24,29 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prevState) => {
-        const newState = !prevState;
-        document.body.style.overflow = newState ? 'hidden' : 'auto';
-        return newState;
+      const newState = !prevState;
+      if (newState) {
+        document.body.style.overflow = 'hidden'; // Disable scrolling
+      } else {
+        document.body.style.overflow = 'auto'; // Enable scrolling
+      }
+      return newState;
     });
-};
-
+  };
+  
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'; // Disable scrolling
+    } else {
+      document.body.style.overflow = 'auto'; // Enable scrolling
+    }
+  
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = 'auto'; // Reset on unmount
+    };
+  }, [isMobileMenuOpen]);
+  
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
@@ -87,7 +104,7 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
   };
 
   return (
-    <header className="w-full z-50 top-0 sticky bg-[#F9F9F3] shadow-md">
+    <header className="w-full z-50 top-0 fixed bg-[#F9F9F3] shadow-md ">
       <div className="container mx-auto px-6">
         <nav className="flex items-center justify-between py-4">
           <Link to="/home" className="text-2xl font-reck text-zinc-900 hover:text-green-700 transition-colors duration-300">
@@ -134,7 +151,7 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              className="md:hidden fixed top-0 right-0 w-64 h-full bg-white z-40 shadow-lg"
+              className="md:hidden fixed top-0 right-0 w-64 h-full bg-white z-40 shadow-lg overflow-y-auto"
               ref={dropdownRef}
               initial="closed"
               animate="open"

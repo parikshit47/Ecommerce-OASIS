@@ -43,7 +43,7 @@ const Shop = () => {
   );
 
   return (
-    <div className="pt-10">
+    <div className="pt-24">
       <Products 
         products={filteredProducts} 
         selectedCategory={formatCategoryName(selectedCategory)} 
