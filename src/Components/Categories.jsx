@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import planters from '/src/assets/planters.webp';
 import floral from '/src/assets/floral.webp';
 import plants from '/src/assets/plants.webp';
@@ -18,10 +19,10 @@ const Categories = () => {
                     />
                     <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <p className="text-4xl uppercase text-white mb-4">Planters</p>
-                        <a href="/shop/planters" className="px-4 py-2 bg-white text-black 
+                        <Link to="/shop/planters" className="px-4 py-2 bg-white text-black 
                         uppercase text-lg hover:bg-gray-200 transition">
                             Shop Planters
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 
@@ -36,10 +37,10 @@ const Categories = () => {
                      inset-0 flex flex-col justify-center items-center opacity-0 
                      group-hover:opacity-100 transition-opacity">
                         <p className="text-4xl uppercase text-white mb-4">Cactus</p>
-                        <a href="/shop/cactus" className="px-4 py-2 bg-white text-black 
+                        <Link to="/shop/cactus" className="px-4 py-2 bg-white text-black 
                         uppercase text-lg hover:bg-gray-200 transition">
                             Shop Cactus
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 
@@ -52,10 +53,10 @@ const Categories = () => {
                     />
                     <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <p className="text-4xl uppercase text-white mb-4">Floral</p>
-                        <a href="/shop/floral" className="px-4 py-2 bg-white text-black 
+                        <Link to="/shop/floral" className="px-4 py-2 bg-white text-black 
                         uppercase text-lg hover:bg-gray-200 transition">
                             Shop Floral
-                        </a>
+                        </Link>
                     </div>
                 </div>
 
