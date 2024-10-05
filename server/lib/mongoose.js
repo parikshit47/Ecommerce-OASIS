@@ -3,7 +3,7 @@ dotenv.config();
 // lib/mongoose.js
 
 import mongoose from 'mongoose';
-const mongoURL = "mongodb+srv://parikshit:gKLHDWeedDAiObXz@ecommerce.6fp9w.mongodb.net/Ecommerce?retryWrites=true&w=majority&appName=Ecommerce";
+const mongoURL = process.env.MONGO_URL;
 
 export const connectDB = async () => {
   
