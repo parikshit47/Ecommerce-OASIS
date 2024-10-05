@@ -9,10 +9,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// CORS configuration
 const allowedOrigins = [
-    'http://localhost:5173', // Add your frontend URL(s) here
+    'http://localhost:5173', 
     'http://localhost:3001', 
-    'https://plants-oasis.vercel.app/' // If your frontend runs here
+    'https://plants-oasis.vercel.app/' 
 ];
 
 app.use(cors({
@@ -37,6 +38,7 @@ app.get('/', (req, res) => {
     res.send('Backend server is running');
 });
 
+// Route to fetch products
 app.get('/getProducts', async (req, res) => {
     try {
         const products = await Product.find();
@@ -51,6 +53,7 @@ app.get('/getProducts', async (req, res) => {
     }
 });
 
+// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
