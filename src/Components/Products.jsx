@@ -28,10 +28,10 @@ const Products = ({ products, selectedCategory }) => {
                     {selectedCategory ? formatCategoryName(selectedCategory) : "All Products"}
                 </h1>
             </motion.div>
-            <div className="max-w-7xl p-5 mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <div className="max-w-7xl p-5 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 {products.map(product => (
                     <motion.div
-                        key={product._id} // Use product._id as the key
+                        key={product._id}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.3 }}
@@ -41,24 +41,20 @@ const Products = ({ products, selectedCategory }) => {
                               pathname: `/products/${formatProductNameForURL(product.name)}`,
                               state: { product }
                             }}
-                            className="group bg-transparent  overflow-hidden 
+                            className="group bg-transparent overflow-hidden 
                             flex flex-col h-full transition-all duration-300 rounded-md"
                         >
-                            <div className="relative">
+                            <div className="w-full aspect-[3/4] mb-1.5 overflow-hidden rounded-md shadow-sm">
                                 <img 
                                     src={`/images/${product.image}`} 
                                     alt={product.name} 
-                                    className="w-full h-96 object-cover object-center 
+                                    className="w-full h-full object-cover object-center 
                                     transition-transform duration-300 hover:scale-105"
                                 />
-                                <div className=" 
-                                group-hover:opacity-100 transition-opacity duration-300"></div>
                             </div>
-                            <div className="p-4 flex-grow flex flex-col
-                            justify-between">
-                                <h2 className="text-md
-                                uppercase  text-gray-800">{product.name}</h2>
-                                <p className="text-md  text-gray-900">${product.price}</p>
+                            <div className="p-4 flex-grow flex flex-col justify-between">
+                                <h2 className="mt-1.5 text-xs font-semibold">{product.name}</h2>
+                                <p className="text-xs text-gray-600">${product.price}</p>
                             </div>
                         </Link>
                     </motion.div>

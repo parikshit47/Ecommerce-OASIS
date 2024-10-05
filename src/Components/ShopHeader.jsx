@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { HiMenuAlt3, HiX } from 'react-icons/hi'; // Import icons for menu toggle
 
@@ -19,6 +19,7 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
@@ -38,6 +39,13 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const currentCategory = location.pathname.split('/').pop();
+    if (currentCategory && currentCategory !== selectedCategory) {
+      setSelectedCategory(currentCategory);
+    }
+  }, [location, selectedCategory, setSelectedCategory]);
 
   return (
     <header className="w-full z-50 top-0 sticky bg-[#F9F9F3] shadow-md">
