@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { HiMenuAlt3, HiX } from 'react-icons/hi'; // Import icons for menu toggle
+import { HiX, HiMenu } from 'react-icons/hi';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const formatCategoryName = (category) => {
   return category
@@ -21,11 +22,19 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prevState) => {
+        const newState = !prevState;
+        document.body.style.overflow = newState ? 'hidden' : 'auto';
+        return newState;
+    });
+};
+
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setIsMobileMenuOpen(false);
+    document.body.style.overflow = 'auto';
     navigate(`/shop/${category}`);
   };
 
@@ -33,11 +42,15 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsMobileMenuOpen(false);
+        document.body.style.overflow = 'auto';
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.body.style.overflow = 'auto';
+    };
   }, []);
 
   useEffect(() => {
@@ -46,6 +59,32 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
       setSelectedCategory(currentCategory);
     }
   }, [location, selectedCategory, setSelectedCategory]);
+
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      x: "100%",
+    },
+    open: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      },
+    },
+  };
+
+  const closeButtonVariants = {
+    closed: { rotate: 0 },
+    open: { rotate: 180 },
+  };
+
+  const menuItemVariants = {
+    closed: { opacity: 0, y: 20 },
+    open: { opacity: 1, y: 0 },
+  };
 
   return (
     <header className="w-full z-50 top-0 sticky bg-[#F9F9F3] shadow-md">
@@ -75,28 +114,56 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
           </Link>
 
           {/* Mobile Menu Toggle */}
-          <button className="md:hidden text-zinc-900" onClick={toggleMobileMenu}>
-            {isMobileMenuOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
+          <button className="md:hidden text-zinc-900 z-50" onClick={toggleMobileMenu}>
+            {isMobileMenuOpen ? (
+              <motion.div
+                initial="closed"
+                animate="open"
+                variants={closeButtonVariants}
+                transition={{ duration: 0.3 }}
+              >
+                <HiX size={24} />
+              </motion.div>
+            ) : (
+              <HiMenu size={24} />
+            )}
           </button>
         </nav>
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden" ref={dropdownRef}>
-            <ul className="bg-white py-2 rounded-lg shadow-md">
-              {["all", "floral", "cactus", "petFriendly", "planters", "misc"].map((category) => (
-                <li key={category} className="py-1">
-                  <button
-                    onClick={() => handleCategoryChange(category)}
-                    className={`block w-full text-left px-4 py-2 uppercase hover:bg-green-100 transition-colors duration-300 rounded-md ${selectedCategory === category ? "bg-green-100 text-green-700" : ""}`}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              className="md:hidden fixed top-0 right-0 w-64 h-full bg-white z-40 shadow-lg"
+              ref={dropdownRef}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={menuVariants}
+            >
+              <ul className="p-4 mt-16">
+                {["all", "floral", "cactus", "petFriendly", "planters", "misc"].map((category, index) => (
+                  <motion.li
+                    key={category}
+                    className="py-2"
+                    variants={menuItemVariants}
+                    initial="closed"
+                    animate="open"
+                    exit="closed"
+                    transition={{ delay: 0.1 * index }}
                   >
-                    {formatCategoryName(category)}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+                    <button
+                      onClick={() => handleCategoryChange(category)}
+                      className={`block w-full text-left px-4 py-2 uppercase hover:bg-green-100 transition-colors duration-300 rounded-md ${selectedCategory === category ? "bg-green-100 text-green-700" : ""}`}
+                    >
+                      {formatCategoryName(category)}
+                    </button>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
