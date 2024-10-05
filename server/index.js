@@ -9,9 +9,21 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const allowedOrigins = [
+    'http://localhost:5173', // Add your frontend URL(s) here
+    'http://localhost:3001',  // If your frontend runs here
+];
+
 app.use(cors({
-    origin: 'http://localhost:5173' // Frontend port
+    origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, origin);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
 }));
+
 app.use(express.json());
 
 // Connect to MongoDB
