@@ -24,7 +24,7 @@ const Products = ({ products, selectedCategory }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                <h1 className="text-5xl font-reck uppercase tracking-wider">
+                <h1 className="text-3xl font-reck uppercase tracking-wider">
                     {selectedCategory ? formatCategoryName(selectedCategory) : "All Products"}
                 </h1>
             </motion.div>
