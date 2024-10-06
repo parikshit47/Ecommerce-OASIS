@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Products from "../Components/Products";
+import { Helmet } from "react-helmet";
 
 const Shop = () => {
   const { category } = useParams();
@@ -44,6 +45,10 @@ const Shop = () => {
 
   return (
     <div className="pt-24">
+        <Helmet>
+        <title>Oasis - Shop</title>
+        <meta name="description" content="Welcome to Oasis - Your one-stop shop for plants and planters" />
+      </Helmet>
       <Products 
         products={filteredProducts} 
         selectedCategory={formatCategoryName(selectedCategory)} 

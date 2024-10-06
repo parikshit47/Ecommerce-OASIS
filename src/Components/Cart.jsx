@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem, clearCart } from '../redux/cartSlice';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Helmet } from 'react-helmet';
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart);
@@ -49,6 +50,10 @@ const Cart = () => {
         </motion.p>
       ) : (
         <>
+         <Helmet>
+        <title>Oasis - Cart</title>
+        <meta name="description" content="Welcome to Oasis - Your one-stop shop for plants and planters" />
+      </Helmet>
           <ul className="space-y-4 sm:space-y-6 max-w-full">
             {cartItems.map((item, index) => (
               <motion.li 

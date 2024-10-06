@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Oasis - Home</title>
+        <title>Plants Oasis - Ecommerce</title>
         <meta name="description" content="Welcome to Oasis - Your one-stop shop for plants and planters" />
       </Helmet>
       <section className="overflow-x-hidden">
