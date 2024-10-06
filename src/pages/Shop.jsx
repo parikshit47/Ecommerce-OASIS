@@ -48,6 +48,7 @@ const Shop = () => {
         <Helmet>
         <title>Oasis - Shop</title>
         <meta name="description" content="Welcome to Oasis - Your one-stop shop for plants and planters" />
+        <link rel="icon" href="/oasis.ico" type="image/x-icon" />
       </Helmet>
       <Products 
         products={filteredProducts} 
