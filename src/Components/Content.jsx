@@ -51,7 +51,7 @@ const Content = () => {
         <p className="text-gray-700 mb-2">Subscribe to our newsletter for exclusive offers and updates.</p>
         <form className="flex flex-col sm:flex-row gap-2">
           <input type="email" placeholder="Enter your email" className="p-2 border border-gray-300 text-black
-          focus:ring-white rounded flex-grow" />
+           rounded flex-grow" />
           <button type="submit" className="bg-zinc-800 text-white p-2 rounded hover:bg-zinc-700 transition-colors duration-300 whitespace-nowrap">Subscribe</button>
         </form>
       </div>

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, removeItem, clearCart } from '../redux/cartSlice';
+import { addItem, removeItem, clearCart, updateQuantity } from '../redux/cartSlice';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
@@ -11,13 +11,16 @@ const Cart = () => {
 
   const handleAddItem = (item) => {
     console.log('Adding item:', item);
-    const itemToAdd = { ...item };
-    dispatch(addItem(itemToAdd));
+    dispatch(updateQuantity({ id: item.id, quantity: item.quantity + 1 }));
   };
 
   const handleRemoveItem = (item) => {
     console.log('Removing item from cart:', item);
-    dispatch(removeItem(item));
+    if (item.quantity > 1) {
+      dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }));
+    } else {
+      dispatch(removeItem(item));
+    }
   };
 
   const handleClearCart = () => {
@@ -83,10 +86,7 @@ const Cart = () => {
                     </button>
                     <span className="px-3 py-2 text-sm w-10 text-center bg-gray-50">{item.quantity}</span>
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleAddItem(item);
-                      }}
+                      onClick={() => handleAddItem(item)}
                       className="px-3 py-2 text-xl font-semibold hover:bg-gray-100 transition duration-200"
                     >
                       +
