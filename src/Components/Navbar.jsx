@@ -1,26 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HiArrowSmallRight } from "react-icons/hi2";
-import { HiMenuAlt3 } from "react-icons/hi"; // Hamburger icon for mobile
-import { AiOutlineClose } from "react-icons/ai"; // Close icon for mobile
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { HiMenuAlt3 } from "react-icons/hi"; 
+import { AiOutlineClose } from "react-icons/ai"; 
+import { Link } from "react-router-dom"; 
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Toggle mobile menu
   const toggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  useEffect(() => {
+    // Simulate content loading
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <header className="absolute top-0 w-full z-50">
       <nav className="max-w-full p-4 flex 
       justify-between items-center text-white overflow-hidden">
         {/* Logo */}
-        <div className="text-3xl font-reck 
-        lg:text-6xl absolute top-0 right-10 p-10 overflow-hidden">
-          OASIS
-        </div>
+        {isLoaded && (
+          <div className="text-3xl font-reck 
+          lg:text-6xl absolute top-0 right-10 p-10 overflow-hidden">
+            OASIS
+          </div>
+        )}
 
         {/* Vertical Menu for Desktop */}
         <ul className="font-reck hidden md:flex flex-col gap-2 lg:gap-6 

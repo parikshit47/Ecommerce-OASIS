@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* Load fonts asynchronously */
+@import url('https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap') print;
 
 @tailwind base;
 @tailwind components;
@@ -16,34 +17,20 @@
   font-family: "Space Mono", monospace;
   line-height: 1.5;
   font-weight: 400;
-  scroll-behavior: smooth;
-  color-scheme: light dark;
   color: rgb(24 24 27);
   background-color: #F9F9F3;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 html {
-  overflow-y: scroll; /* Always show scrollbar */
+  scroll-behavior: smooth;
 }
 
-*:focus {
-  outline: none;
-}
-
-input {
-  /* Add any additional styles for inputs */
-}
 
 .item {
-  outline: 1px solid black;
   margin-top: 1px;
   margin-left: 1px;
 }
 
-.nav__item{
-  font-size:3vw;
+.nav__item {
+  font-size: clamp(33px, 3vw, 24px);
 }
