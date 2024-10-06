@@ -5,7 +5,7 @@ const FAQ = () => {
   const [openQuestion, setOpenQuestion] = useState(null);
 
   const faqData = [
-    {
+    { 
       question: "What types of plants do you offer?",
       answer: "At Plants Oasis, we offer a wide variety of indoor and outdoor plants, including succulents, tropical plants, herbs, and more."
     },
@@ -29,7 +29,7 @@ const FAQ = () => {
 
   return (
     <div className="max-w-3xl mx-auto mt-12 p-6 font-smono">
-      <h2 className="text-4xl font-bold mb-6 text-center font-reck uppercase pb-6">Frequently Asked Questions</h2>
+      <h2 className="text-3xl mb-6 text-center font-reck uppercase pb-6">Frequently Asked Questions</h2>
       {faqData.map((item, index) => (
         <motion.div 
           key={index} 
@@ -42,7 +42,7 @@ const FAQ = () => {
             className="flex justify-between items-center w-full text-left"
             onClick={() => toggleQuestion(index)}
           >
-            <span className="text-lg font-semibold">{item.question}</span>
+            <span className="text-md">{item.question}</span>
             <motion.span 
               className="text-2xl"
               animate={{ rotate: openQuestion === index ? 180 : 0 }}

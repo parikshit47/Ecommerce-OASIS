@@ -52,9 +52,9 @@ const Products = ({ products, selectedCategory }) => {
                                     transition-transform duration-300 hover:scale-105"
                                 />
                             </div>
-                            <div className="p-4 flex-grow flex flex-col justify-between">
-                                <h2 className="mt-1.5 text-xs font-semibold">{product.name}</h2>
-                                <p className="text-xs text-gray-600">${product.price}</p>
+                            <div className="p-4 flex-grow flex flex-col justify-between ">
+                                <h2 className="mt-1.5 text-xs font-semibold uppercase">{product.name}</h2>
+                                <p className="text-xs">${product.price}</p>
                             </div>
                         </Link>
                     </motion.div>
