@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, removeItem, clearCart, updateQuantity } from '../redux/cartSlice';
+import { removeItem, clearCart, updateQuantity } from '../redux/cartSlice';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
