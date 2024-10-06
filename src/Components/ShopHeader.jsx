@@ -87,7 +87,7 @@ const ShopHeader = ({ selectedCategory, setSelectedCategory }) => {
       x: 0,
       transition: {
         type: "spring",
-        stiffness: 260,
+        stiffness: 250,
         damping: 20,
       },
     },

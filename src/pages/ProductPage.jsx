@@ -99,7 +99,7 @@ const ProductPage = () => {
 
   return (
     <>
-      <section className="flex flex-col lg:flex-row mx-auto max-w-7xl p-2 sm:p-5 mt-24 pt-24">
+      <section className="flex flex-col lg:flex-row mx-auto max-w-7xl p-2 sm:p-5 mt-24 sm:pt-0 md:pt-2 lg:pt-10">
         <div className="w-full lg:w-1/2 lg:p-4">
           <img
             src={`/images/${product.image}`}

@@ -2,6 +2,7 @@ import { useState, lazy, Suspense } from "react";
 import { Helmet } from "react-helmet";
 import Hero from "../Components/Hero";
 import Navbar from "../Components/Navbar";
+import Marquee from "../Components/Marquee";
 
 const LazyNewArrivals = lazy(() => import("../Components/NewArrival"));
 const LazyCategories = lazy(() => import("../Components/Categories"));
@@ -92,6 +93,7 @@ const Home = () => {
         </div>
         
         <Suspense fallback={<div>Loading...</div>}>
+          <Marquee />
           <LazyCategories />
           <LazyNewArrivals />
           <LazyFAQ />
